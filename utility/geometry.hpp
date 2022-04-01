@@ -11,6 +11,9 @@ struct Point {	//点
 	Point(double x, double y) : x_(x), y_(y) {}
 	Point(std::complex<double> w) : x_(w.real()), y_(w.imag()) {}
 	std::complex<double> get_complex() { return std::complex<double>(x_, y_); }
+	static double distance(Point a, Point b) {	// 2点間距離
+		return abs(a.get_complex() - b.get_complex());
+	}
 };
 
 struct LineSeg {  //線分
@@ -38,6 +41,9 @@ struct LineSeg {  //線分
 		crossproduct[3] = lineVec.real() * vec.imag() - lineVec.imag() * vec.real();  //線分と2点間の外積計算
 
 		return ((crossproduct[0] * crossproduct[1] < 0) && (crossproduct[2] * crossproduct[3] < 0));
+	}
+	double length() {
+		return Point::distance(a_, b_);
 	}
 };
 }  // namespace ishihalib

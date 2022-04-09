@@ -45,5 +45,27 @@ struct LineSeg {  //線分
 	double length() {
 		return Point::distance(a_, b_);
 	}
+
+	static double distance(LineSeg ls, Point p) {
+		if (ls.a_.get_complex() == ls.b_.get_complex()) {
+			return Point::distance(ls.a_, p);
+		}
+		std::complex<double> AB, AP;
+		AB = ls.b_.get_complex() - ls.a_.get_complex();	 // AB
+		AP = p.get_complex() - ls.a_.get_complex();		 // AP
+		double absAB = abs(AB);
+		double t = (AB.real() * AP.real() + AB.imag() * AB.imag()) / (absAB * absAB);  //距離を最小とする内分点
+
+		if (0 < t && t < 1) {
+			return abs(AB.real() * AP.imag() - AB.imag() * AP.real()) / absAB;
+		} else {
+			return std::min(Point::distance(ls.a_, p), Point::distance(ls.b_, p));
+		}
+	}
+
+	static double distance(LineSeg a, LineSeg b) {
+		if (LineSeg::crossing(a, b)) return 0;
+		return std::min(LineSeg::distance(a, b.a_), LineSeg::distance(a, b.b_));
+	}
 };
 }  // namespace ishihalib

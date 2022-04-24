@@ -8,6 +8,7 @@ namespace ishihalib {
 
 struct Point {	//点
 	double x_, y_;
+	Point() : x_(0), y_(0) {}
 	Point(double x, double y) : x_(x), y_(y) {}
 	Point(std::complex<double> w) : x_(w.real()), y_(w.imag()) {}
 	std::complex<double> get_complex() { return std::complex<double>(x_, y_); }

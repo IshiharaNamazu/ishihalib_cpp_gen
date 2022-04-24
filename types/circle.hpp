@@ -5,6 +5,9 @@ struct Circle {
 	Circle(double circumference, double value_ = 0) : circumference_(circumference), value_(value_) {
 	}
 
+	Circle(const Circle& c) : circumference_(c.circumference_), value_(c.value_) {
+	}
+
 	void set(double value) {
 		value_ = value;
 		normalize();
@@ -18,32 +21,32 @@ struct Circle {
 		while (value_ <= -circumference_ / 2.) {
 			value_ += circumference_;
 		}
-		while (value_ < circumference_ / 2.) {
+		while (value_ > circumference_ / 2.) {
 			value_ -= circumference_;
 		}
 	}
 
   public:
 	Circle operator+() const {
-		return *this;
+		return (*this);
 	}
 	Circle operator-() const {
 		Circle ret(value_);
 		return ret;
 	}
-	Circle& operator+=(const float& rhs) {
+	Circle& operator+=(const double& rhs) {
 		set(value_ + rhs);
 		return *this;
 	}
-	Circle& operator-=(const float& rhs) {
+	Circle& operator-=(const double& rhs) {
 		set(value_ - rhs);
 		return *this;
 	}
-	Circle& operator*=(const float& rhs) {
+	Circle& operator*=(const double& rhs) {
 		set(value_ * rhs);
 		return *this;
 	}
-	Circle& operator/=(const float& rhs) {
+	Circle& operator/=(const double& rhs) {
 		set(value_ / rhs);
 		return *this;
 	}
@@ -67,12 +70,12 @@ struct Circle {
 		set(rhs.value_);
 		return *this;
 	}
-	Circle& operator=(const float& rhs) {
+	Circle& operator=(const double& rhs) {
 		set(rhs);
 		return *this;
 	}
 	operator double() const {
 		return value_;
 	}
-}
+};
 }  // namespace ishihalib
